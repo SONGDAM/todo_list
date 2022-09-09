@@ -1,9 +1,12 @@
-import { FormErrorMessage, FormControl, Input, Heading, Button } from '@chakra-ui/react';
+import { Input, Heading, Button, Box } from '@chakra-ui/react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { ILoginProps } from '../@types/ILoginProps';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { ArrowForwardIcon } from '@chakra-ui/icons';
+import google from '../asset/google-login.png';
 
-const ErrorMessage = styled.div`
+export const ErrorMessage = styled.div`
   width: 8rem;
   height: 1rem;
   font-size: 12px;
@@ -38,8 +41,6 @@ function Login() {
         />
 
         {errors?.Id?.type === 'required' && <ErrorMessage>아이디를 입력해주세요</ErrorMessage>}
-        {errors?.Id?.type === 'pattern' && <ErrorMessage>숫자와 문자만 가능합니다</ErrorMessage>}
-        {errors?.Id?.type === 'minLength' && <ErrorMessage>4글자 이상 입력해주세요</ErrorMessage>}
 
         <Input
           variant='flushed'
@@ -55,13 +56,31 @@ function Login() {
         />
 
         {errors?.password?.type === 'required' && <ErrorMessage>비밀번호를 입력해주세요</ErrorMessage>}
-        {errors?.password?.type === 'pattern' && <ErrorMessage>숫자와 문자만 가능합니다</ErrorMessage>}
-        {errors?.password?.type === 'minLength' && <ErrorMessage>4글자 이상 입력해주세요</ErrorMessage>}
 
-        <Button colorScheme='teal' width='14rem' ml={2} mt={4} type='submit'>
+        <Button colorScheme='teal' width='14rem' ml={4} mt={8} type='submit'>
           Login!
         </Button>
       </form>
+
+      <Link to='/join'>
+        <Button
+          colorScheme='blue'
+          width='14rem'
+          ml={4}
+          mt={4}
+          type='submit'
+          variant='outline'
+          rightIcon={<ArrowForwardIcon />}
+        >
+          join us
+        </Button>
+      </Link>
+
+      <Link to='/'>
+        <Box w='14rem' mt='2rem' ml='1rem' textAlign='center' borderRadius='1rem'>
+          <img src={google} alt='' />
+        </Box>
+      </Link>
     </>
   );
 }

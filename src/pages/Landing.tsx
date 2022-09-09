@@ -2,9 +2,10 @@ import { Button, Box } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const Title = styled.h1`
+export const Title = styled.h1`
   display: block;
   margin-bottom: 2rem;
+  text-align: center;
   font-size: 1.4rem;
   font-weight: 200;
 `;
