@@ -5,7 +5,7 @@ import { v1 } from 'uuid';
 const { persistAtom } = recoilPersist();
 
 export const todoState = atom({
-  key: `todoListState`,
+  key: `todoListState/${v1}`,
   default: {
     day: new Date(),
     title: '',

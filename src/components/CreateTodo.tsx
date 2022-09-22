@@ -1,8 +1,8 @@
+import { MouseEventHandler } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { ITodoProps } from '../@types/ITodoProps';
 import { Input, Button, Box, Textarea } from '@chakra-ui/react';
 import { ErrorMessage } from './Login';
-import { MouseEventHandler } from 'react';
 import { selectDayState } from '../atom/selectDayState';
 import dayjs from 'dayjs';
 import { useRecoilValue, useRecoilState } from 'recoil';
@@ -52,7 +52,6 @@ function CreateTodo({ onClose }: onCloseProps) {
             })}
           />
           {errors?.title?.type === 'required' && <ErrorMessage>제목을 입력해주세요</ErrorMessage>}
-
           <Textarea
             w='12rem'
             mb='0.4rem'

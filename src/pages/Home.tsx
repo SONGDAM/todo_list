@@ -3,13 +3,12 @@ import { useRecoilState } from 'recoil';
 import { selectDayState } from '../atom/selectDayState';
 import Calendar from 'react-calendar';
 import '../styles/calendar.css';
-import { IconButton, Box, useBoolean, Input } from '@chakra-ui/react';
+import { IconButton, useBoolean } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import CreateTodo from '../components/CreateTodo';
 import dayjs from 'dayjs';
 import { todoState } from '../atom/todoState';
 import { useRecoilValue } from 'recoil';
-import { ITodoProps } from '../@types/ITodoProps';
 
 function Home() {
   const [selctDayValue, change] = useRecoilState(selectDayState);
@@ -20,7 +19,7 @@ function Home() {
 
   const todo = useRecoilValue(todoState);
 
-  const todoToArray = Array.from(todo);
+
 
   const print = (value: Date) => {
     console.log('value >>>', dayjs(value).format('YYYY-MM-DD'));
@@ -35,22 +34,21 @@ function Home() {
   return (
     <>
       <Calendar onChange={change} value={selctDayValue} onClickDay={print} locale={'en-US'} />
-      <Box mt='2rem'>
-        {!flag && (
-          <IconButton
-            onClick={setFlag.on}
-            colorScheme='teal'
-            aria-label='add-todo'
-            icon={<AddIcon />}
-            ml='1rem'
-            mt='0.6rem'
-          >
-            Add Todo
-          </IconButton>
-        )}
-        {isShow ? console.log(todoToArray instanceof Array) : null}
-        {flag && <CreateTodo onClose={setFlag.off} />}
-      </Box>
+
+      {!flag && (
+        <IconButton
+          onClick={setFlag.on}
+          colorScheme='teal'
+          aria-label='add-todo'
+          icon={<AddIcon />}
+          ml='1rem'
+          mt='0.6rem'
+        >
+          Add Todo
+        </IconButton>
+      )}
+      {isShow ? "hello": null}
+      {flag && <CreateTodo onClose={setFlag.off} />}
     </>
   );
 }

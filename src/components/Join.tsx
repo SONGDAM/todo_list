@@ -3,16 +3,27 @@ import { ILoginProps } from '../@types/ILoginProps';
 import { Box, Flex, Input, Button } from '@chakra-ui/react';
 import { Title } from '../pages/Landing';
 import { ErrorMessage } from './Login';
+import { useNavigate } from 'react-router-dom';
 
 function Join() {
+  const navigate = useNavigate();
+
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm<ILoginProps>();
 
-  const onSubmit: SubmitHandler<ILoginProps> = (data: ILoginProps) => console.log(JSON.stringify(data));
+  const onSubmit: SubmitHandler<ILoginProps> = async (data: ILoginProps) => {
+    fetch(`${process.env.REACT_APP_BASEURL}/users`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((res) => console.log(res));
 
+    navigate('/login');
+  };
   return (
     <>
       <Flex align='center' justify='center' direction='column' wrap='wrap'>
@@ -34,22 +45,20 @@ function Join() {
             {errors?.name?.type === 'required' && <ErrorMessage>이름을 입력해주세요</ErrorMessage>}
 
             <label>
-              ID
+              email
               <Input
                 mt='0.8rem'
                 mb='1rem'
-                placeholder='ID'
-                {...register('Id', {
-                  pattern: /^[a-zA-Z0-9]*$/,
+                placeholder='email'
+                {...register('email', {
                   required: '필수 입력 항목입니다',
-                  minLength: { value: 4, message: '아이디를 입력해주세요' },
                 })}
               />
             </label>
 
-            {errors?.Id?.type === 'required' && <ErrorMessage>아이디를 입력해주세요</ErrorMessage>}
-            {errors?.Id?.type === 'pattern' && <ErrorMessage>숫자와 문자만 가능합니다</ErrorMessage>}
-            {errors?.Id?.type === 'minLength' && <ErrorMessage>4글자 이상 입력해주세요</ErrorMessage>}
+            {errors?.email?.type === 'required' && <ErrorMessage>아이디를 입력해주세요</ErrorMessage>}
+            {/* {errors?.email?.type === 'pattern' && <ErrorMessage>숫자와 문자만 가능합니다</ErrorMessage>} */}
+            {errors?.email?.type === 'minLength' && <ErrorMessage>4글자 이상 입력해주세요</ErrorMessage>}
 
             <label>
               password

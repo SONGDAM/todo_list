@@ -1,5 +1,5 @@
 export interface ILoginProps {
   name?: string;
-  Id: string;
+  email: string;
   password: string | number;
 }

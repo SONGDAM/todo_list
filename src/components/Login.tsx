@@ -20,7 +20,21 @@ function Login() {
     formState: { errors },
   } = useForm<ILoginProps>();
 
-  const onSubmit: SubmitHandler<ILoginProps> = (data: ILoginProps) => console.log(JSON.stringify(data));
+  const onSubmit: SubmitHandler<ILoginProps> = async (data: ILoginProps) => {
+    const rawResponse = await fetch(`${process.env.REACT_APP_BASEURL}/login`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'content-type': 'application/json',
+      },
+    });
+
+    console.log('response result :', rawResponse);
+
+    if (rawResponse.ok) {
+      console.log('hello');
+    }
+  };  
 
   return (
     <>
@@ -33,15 +47,11 @@ function Login() {
           htmlSize={1}
           mb={4}
           placeholder='ID'
-          {...register('Id', {
-            pattern: /^[a-zA-Z0-9]*$/,
+          {...register('email', {
             required: '필수 입력 항목입니다',
-            minLength: { value: 4, message: '아이디를 입력해주세요' },
           })}
         />
-
-        {errors?.Id?.type === 'required' && <ErrorMessage>아이디를 입력해주세요</ErrorMessage>}
-
+        {errors?.email?.type === 'required' && <ErrorMessage>아이디를 입력해주세요</ErrorMessage>}
         <Input
           variant='flushed'
           htmlSize={1}
@@ -54,9 +64,7 @@ function Login() {
             minLength: { value: 4, message: '4글자 이상 입력해주세요' },
           })}
         />
-
         {errors?.password?.type === 'required' && <ErrorMessage>비밀번호를 입력해주세요</ErrorMessage>}
-
         <Button colorScheme='teal' width='14rem' ml={4} mt={8} type='submit'>
           Login!
         </Button>
@@ -76,7 +84,7 @@ function Login() {
         </Button>
       </Link>
 
-      <Link to='/'>
+      <Link to='/login'>
         <Box w='14rem' mt='2rem' ml='1rem' textAlign='center' borderRadius='1rem'>
           <img src={google} alt='' />
         </Box>
